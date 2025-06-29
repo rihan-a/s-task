@@ -4,16 +4,25 @@ import Entry from './Entry';
 
 type Props = {
     childrenNodes: (ComputedSectionType | EntryType)[];
+    onChildChange: (updated: ComputedSectionType | EntryType) => void;
 };
 
-export default function SectionList({childrenNodes}: Props) {
+export default function SectionList({childrenNodes, onChildChange}: Props) {
     return (
         <>
             {childrenNodes.map((child) =>
                 'children' in child ? (
-                    <Section key={child.name} node={child} />
+                    <Section
+                        key={child.name}
+                        node={child}
+                        onChange={onChildChange}
+                    />
                 ) : (
-                    <Entry key={child.name} entry={child} />
+                    <Entry
+                        key={child.name}
+                        entry={child}
+                        onChange={onChildChange}
+                    />
                 )
             )}
         </>
