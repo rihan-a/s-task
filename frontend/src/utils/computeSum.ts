@@ -1,6 +1,8 @@
-import type {Section, ComputedSection} from '../types';
+import type {SectionType, ComputedSectionType} from '../types';
 
-export function computeComputedSection(section: Section): ComputedSection {
+export function computeComputedSection(
+    section: SectionType
+): ComputedSectionType {
     let computedSum = 0;
 
     // Recursivly process children, accumulating their computedSum
