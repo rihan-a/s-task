@@ -1,6 +1,6 @@
 import './App.css';
 import {useEffect, useState} from 'react';
-import type {SectionType, ComputedSectionType} from './types';
+import type {SectionType, ComputedSectionType, EntryType} from './types';
 import {computeComputedSection} from './utils/computeSum';
 import Section from './components/Section';
 
@@ -18,11 +18,43 @@ function App() {
 
     if (!tree) return <div>Loading...</div>;
 
+    const handleUpdate = (updated: EntryType | ComputedSectionType) => {
+        if (!tree) return;
+
+        const replaceNode = (
+            node: ComputedSectionType
+        ): ComputedSectionType => {
+            if (node.name === updated.name) {
+                // Replace the matching node
+                return updated as ComputedSectionType;
+            }
+
+            const newChildren = node.children.map((child) => {
+                if (child.name === updated.name) {
+                    return updated;
+                } else if ('children' in child) {
+                    return replaceNode(child);
+                } else {
+                    return child;
+                }
+            });
+
+            return {
+                ...node,
+                children: newChildren,
+                computedSum: node.computedSum,
+            };
+        };
+
+        const updatedTree = replaceNode(tree);
+        const recomputedTree = computeComputedSection(updatedTree);
+        setTree(recomputedTree);
+    };
+
     return (
         <div>
             <h1>Splinde Task</h1>
-            <h2></h2>
-            <Section node={tree} />
+            <Section node={tree} onChange={handleUpdate} />
         </div>
     );
 }
