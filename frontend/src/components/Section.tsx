@@ -7,7 +7,7 @@ type Props = {
 
 export default function Section({node}: Props) {
     return (
-        <div className="ml-4 mt-2 border-l-2 pl-2">
+        <div className=" ">
             <div className="font-semibold">
                 {node.name} — {node.computedSum}
             </div>
