@@ -8,9 +8,14 @@ type Props = {
 
 export default function Section({node, onChange}: Props) {
     return (
-        <div className=" border border-black p-2 m-2 rounded-lg">
-            <div className="font-semibold text-left p-1">
-                {node.name} — {node.computedSum}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-gray-900">
+                    {node.name}
+                </h2>
+                <div className="text-2xl font-bold text-blue-600">
+                    ${node.computedSum.toLocaleString()}
+                </div>
             </div>
             <SectionList
                 childrenNodes={node.children}

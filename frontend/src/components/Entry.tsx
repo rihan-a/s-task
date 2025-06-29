@@ -27,21 +27,34 @@ export default function Entry({entry, onChange}: Props) {
     };
 
     return (
-        <div className="border border-black w-[50vw] p-2 m-3 flex justify-between align-center">
-            <input
-                type="number"
-                value={sum}
-                onChange={handleSumChange}
-                onBlur={commit}
-                className="w-[15%] mr-2 p-1 border"
-            />
-            <input
-                type="text"
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                onBlur={commit}
-                className="w-[70%] bg-neutral-200 p-2"
-            />
+        <div className="bg-gray-50 rounded-lg p-4 mb-3 border border-gray-100">
+            <div className="flex items-center space-x-4">
+                <div className="flex-1">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        {entry.name}
+                    </label>
+                    <input
+                        type="text"
+                        value={note}
+                        onChange={(e) => setNote(e.target.value)}
+                        onBlur={commit}
+                        placeholder="Add a note..."
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                </div>
+                <div className="w-32">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Amount
+                    </label>
+                    <input
+                        type="number"
+                        value={sum}
+                        onChange={handleSumChange}
+                        onBlur={commit}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-right"
+                    />
+                </div>
+            </div>
         </div>
     );
 }
