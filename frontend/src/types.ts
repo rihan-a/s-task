@@ -2,16 +2,16 @@ export type TreeNode = {
     name: string;
 };
 
-export type Entry = TreeNode & {
+export type EntryType = TreeNode & {
     note: string;
     sum: number;
 };
 
-export type Section = TreeNode & {
-    children: (Entry | Section)[];
+export type SectionType = TreeNode & {
+    children: (EntryType | SectionType)[];
 };
 
-export type ComputedSection = TreeNode & {
-    children: (Entry | ComputedSection)[];
+export type ComputedSectionType = TreeNode & {
+    children: (EntryType | ComputedSectionType)[];
     computedSum: number;
 };
