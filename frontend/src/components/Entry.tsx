@@ -7,11 +7,23 @@ type Props = {
 };
 
 export default function Entry({entry, onChange}: Props) {
-    const [sum, setSum] = useState(entry.sum);
+    const [sum, setSum] = useState(entry.sum.toString());
     const [note, setNote] = useState(entry.note);
 
     const commit = () => {
-        onChange({...entry, sum: Number(sum), note});
+        const numSum = Number(sum);
+        // Only update if the sum is a valid number
+        if (!isNaN(numSum)) {
+            onChange({...entry, sum: numSum, note});
+        }
+    };
+
+    const handleSumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        // Only update if it's a valid number or empty
+        if (value === '' || !isNaN(Number(value))) {
+            setSum(value);
+        }
     };
 
     return (
@@ -19,7 +31,7 @@ export default function Entry({entry, onChange}: Props) {
             <input
                 type="number"
                 value={sum}
-                onChange={(e) => setSum(Number(e.target.value))}
+                onChange={handleSumChange}
                 onBlur={commit}
                 className="w-[15%] mr-2 p-1 border"
             />
