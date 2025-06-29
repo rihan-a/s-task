@@ -6,16 +6,31 @@ import Section from './components/Section';
 
 function App() {
     const [tree, setTree] = useState<ComputedSectionType | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
     useEffect(() => {
         fetch('http://localhost:8000/api/report')
-            .then((res) => res.json())
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                return res.json();
+            })
             .then((data: SectionType) => {
                 const computed = computeComputedSection(data);
                 setTree(computed);
+                setError(null);
                 console.log(data);
+            })
+            .catch((err) => {
+                setError(
+                    'Failed to load data. Please check if the backend is running.'
+                );
+                console.error('Error fetching data:', err);
             });
     }, []);
 
+    if (error) return <div className="text-red-500 p-4">{error}</div>;
     if (!tree) return <div>Loading...</div>;
 
     const handleUpdate = (updated: EntryType | ComputedSectionType) => {
